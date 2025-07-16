@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monetization Hub - Nocturna</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="scripts/database.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="dashboard-nav">
+            <div class="nav-brand">
+                <img src="assets/logo.svg" alt="Nocturna" class="nav-logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="monetization.html" class="active">Monetization</a></li>
+                <li><a href="content-scheduler.html">Scheduler</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="customer.html">Customer View</a></li>
+            </ul>
+            <div class="nav-actions">
+                <span id="userGreeting">Welcome back!</span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </nav>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <h1>Monetization Hub</h1>
+                    <p>Manage your earnings, subscriptions, and revenue streams</p>
+                </div>
+                <div class="header-actions">
+                    <div class="total-earnings">
+                        <span class="earnings-label">Total Earnings</span>
+                        <span class="earnings-amount" id="totalEarnings">$0.00</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Revenue Overview -->
+            <section class="revenue-overview">
+                <div class="revenue-card">
+                    <div class="revenue-icon">💎</div>
+                    <div class="revenue-content">
+                        <h3>Tips This Month</h3>
+                        <div class="revenue-amount" id="monthlyTips">$0.00</div>
+                        <div class="revenue-change positive" id="tipsChange">+0%</div>
+                    </div>
+                </div>
+                <div class="revenue-card">
+                    <div class="revenue-icon">🔒</div>
+                    <div class="revenue-content">
+                        <h3>Premium Content</h3>
+                        <div class="revenue-amount" id="premiumRevenue">$0.00</div>
+                        <div class="revenue-change positive" id="premiumChange">+0%</div>
+                    </div>
+                </div>
+                <div class="revenue-card">
+                    <div class="revenue-icon">🎁</div>
+                    <div class="revenue-content">
+                        <h3>Custom Requests</h3>
+                        <div class="revenue-amount" id="customRevenue">$0.00</div>
+                        <div class="revenue-change positive" id="customChange">+0%</div>
+                    </div>
+                </div>
+                <div class="revenue-card">
+                    <div class="revenue-icon">📱</div>
+                    <div class="revenue-content">
+                        <h3>Live Sessions</h3>
+                        <div class="revenue-amount" id="liveRevenue">$0.00</div>
+                        <div class="revenue-change positive" id="liveChange">+0%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pricing Management -->
+            <section class="pricing-section">
+                <h3>Pricing & Tiers</h3>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="tier-header">
+                            <h4>Free Tier</h4>
+                            <div class="tier-price">$0</div>
+                        </div>
+                        <div class="tier-features">
+                            <div class="feature-item">✓ Basic content access</div>
+                            <div class="feature-item">✓ Public posts only</div>
+                            <div class="feature-item">✓ Limited interactions</div>
+                        </div>
+                        <div class="tier-stats">
+                            <span id="freeSubscribers">0 subscribers</span>
+                        </div>
+                    </div>
+
+                    <div class="pricing-card premium">
+                        <div class="tier-header">
+                            <h4>Premium Tier</h4>
+                            <div class="tier-price">
+                                $<input type="number" id="premiumPrice" value="9.99" min="1" max="999" step="0.01">
+                                <span>/month</span>
+                            </div>
+                        </div>
+                        <div class="tier-features">
+                            <div class="feature-item">✓ All free tier benefits</div>
+                            <div class="feature-item">✓ Exclusive content access</div>
+                            <div class="feature-item">✓ Direct messaging</div>
+                            <div class="feature-item">✓ Priority support</div>
+                        </div>
+                        <div class="tier-stats">
+                            <span id="premiumSubscribers">0 subscribers</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="updatePremiumPrice()">Update Price</button>
+                    </div>
+
+                    <div class="pricing-card vip">
+                        <div class="tier-header">
+                            <h4>VIP Tier</h4>
+                            <div class="tier-price">
+                                $<input type="number" id="vipPrice" value="24.99" min="1" max="999" step="0.01">
+                                <span>/month</span>
+                            </div>
+                        </div>
+                        <div class="tier-features">
+                            <div class="feature-item">✓ All premium benefits</div>
+                            <div class="feature-item">✓ Custom content requests</div>
+                            <div class="feature-item">✓ Video calls</div>
+                            <div class="feature-item">✓ Exclusive live streams</div>
+                        </div>
+                        <div class="tier-stats">
+                            <span id="vipSubscribers">0 subscribers</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="updateVipPrice()">Update Price</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Custom Content Pricing -->
+            <section class="custom-pricing-section">
+                <h3>Custom Content Pricing</h3>
+                <div class="custom-pricing-grid">
+                    <div class="pricing-item">
+                        <label>Custom Photo Set</label>
+                        <div class="price-input">
+                            $<input type="number" id="photoSetPrice" value="15.00" min="1" max="999" step="0.01">
+                        </div>
+                    </div>
+                    <div class="pricing-item">
+                        <label>Custom Video (per minute)</label>
+                        <div class="price-input">
+                            $<input type="number" id="videoMinutePrice" value="5.00" min="1" max="999" step="0.01">
+                        </div>
+                    </div>
+                    <div class="pricing-item">
+                        <label>Video Call (per minute)</label>
+                        <div class="price-input">
+                            $<input type="number" id="videoCallPrice" value="3.00" min="1" max="999" step="0.01">
+                        </div>
+                    </div>
+                    <div class="pricing-item">
+                        <label>Personal Message</label>
+                        <div class="price-input">
+                            $<input type="number" id="messagePrice" value="2.00" min="1" max="999" step="0.01">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="updateCustomPricing()">Save Custom Pricing</button>
+            </section>
+
+            <!-- Payout Settings -->
+            <section class="payout-section">
+                <h3>Payout Settings</h3>
+                <div class="payout-info">
+                    <div class="payout-card">
+                        <h4>Available for Withdrawal</h4>
+                        <div class="payout-amount" id="availableBalance">$0.00</div>
+                        <button class="btn btn-primary" id="withdrawBtn">Request Withdrawal</button>
+                    </div>
+                    <div class="payout-card">
+                        <h4>Pending Withdrawals</h4>
+                        <div class="payout-amount" id="pendingBalance">$0.00</div>
+                        <div class="payout-status">Processing time: 3-5 business days</div>
+                    </div>
+                </div>
+
+                <div class="payout-methods">
+                    <h4>Payment Methods</h4>
+                    <div class="payment-method">
+                        <div class="method-info">
+                            <span class="method-type">Bank Transfer</span>
+                            <span class="method-details" id="bankDetails">Not configured</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="configureBank()">Configure</button>
+                    </div>
+                    <div class="payment-method">
+                        <div class="method-info">
+                            <span class="method-type">PayPal</span>
+                            <span class="method-details" id="paypalDetails">Not configured</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="configurePaypal()">Configure</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Revenue Analytics -->
+            <section class="revenue-analytics">
+                <h3>Revenue Analytics</h3>
+                <div class="analytics-chart-container">
+                    <canvas id="revenueChart" class="revenue-chart"></canvas>
+                </div>
+                <div class="revenue-breakdown">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Tips</span>
+                        <span class="breakdown-percentage" id="tipsPercentage">0%</span>
+                        <div class="breakdown-bar">
+                            <div class="breakdown-fill tips" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Subscriptions</span>
+                        <span class="breakdown-percentage" id="subscriptionsPercentage">0%</span>
+                        <div class="breakdown-bar">
+                            <div class="breakdown-fill subscriptions" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Custom Content</span>
+                        <span class="breakdown-percentage" id="customPercentage">0%</span>
+                        <div class="breakdown-bar">
+                            <div class="breakdown-fill custom" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Promotional Tools -->
+            <section class="promotional-section">
+                <h3>Promotional Tools</h3>
+                <div class="promo-tools">
+                    <div class="promo-card">
+                        <h4>Discount Codes</h4>
+                        <p>Create special offers for your subscribers</p>
+                        <button class="btn btn-primary" onclick="createDiscount()">Create Discount</button>
+                    </div>
+                    <div class="promo-card">
+                        <h4>Bundle Deals</h4>
+                        <p>Package multiple content pieces together</p>
+                        <button class="btn btn-primary" onclick="createBundle()">Create Bundle</button>
+                    </div>
+                    <div class="promo-card">
+                        <h4>Limited Time Offers</h4>
+                        <p>Run flash sales to boost engagement</p>
+                        <button class="btn btn-primary" onclick="createFlashSale()">Create Offer</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Withdrawal Modal -->
+    <div id="withdrawalModal" class="modal">
+        <div class="modal-content">
+            <h3>Request Withdrawal</h3>
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number" id="withdrawAmount" min="10" step="0.01" placeholder="Minimum $10">
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select id="withdrawMethod">
+                    <option value="">Select payment method</option>
+                    <option value="bank">Bank Transfer</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeWithdrawalModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitWithdrawal()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/monetization.js"></script>
+</body>
+</html>

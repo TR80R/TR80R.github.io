@@ -11,12 +11,19 @@ class NocturnaAppDB {
     }
 
     async init() {
-        await this.waitForDatabase();
-        this.loadUserData();
-        await this.loadUploads();
-        this.setupEventListeners();
-        this.checkAuth();
-        this.updateStats();
+        console.log('Initializing NocturnaAppDB...');
+        try {
+            await this.waitForDatabase();
+            console.log('Database ready');
+            this.loadUserData();
+            await this.loadUploads();
+            this.setupEventListeners();
+            this.checkAuth();
+            this.updateStats();
+            console.log('NocturnaAppDB initialization complete');
+        } catch (error) {
+            console.error('Failed to initialize NocturnaAppDB:', error);
+        }
     }
 
     async waitForDatabase() {
@@ -174,7 +181,15 @@ class NocturnaAppDB {
 
     async handleSignup(e) {
         e.preventDefault();
+        console.log('Signup form submitted');
+        
         this.clearErrors();
+
+        // Wait for database if not ready
+        if (!this.db) {
+            console.log('Database not ready, waiting...');
+            await this.waitForDatabase();
+        }
 
         const formData = new FormData(e.target);
         const userData = {
@@ -185,37 +200,55 @@ class NocturnaAppDB {
             confirmPassword: formData.get('confirmPassword')
         };
 
+        console.log('Form data:', userData);
+
         if (!this.validateSignupData(userData)) {
+            console.log('Validation failed');
             return;
         }
 
         try {
+            console.log('Attempting signup...');
             await this.signup(userData);
+            console.log('Signup successful, redirecting...');
             window.location.href = 'dashboard.html';
         } catch (error) {
+            console.error('Signup error:', error);
             if (error.message.includes('Username')) {
                 this.showError('username', error.message);
             } else if (error.message.includes('Email')) {
                 this.showError('email', error.message);
             } else {
-                this.showError('general', 'Registration failed. Please try again.');
+                this.showError('general', 'Registration failed: ' + error.message);
             }
         }
     }
 
     async handleLogin(e) {
         e.preventDefault();
+        console.log('Login form submitted');
+        
         this.clearErrors();
+
+        // Wait for database if not ready
+        if (!this.db) {
+            console.log('Database not ready, waiting...');
+            await this.waitForDatabase();
+        }
 
         const formData = new FormData(e.target);
         const identifier = formData.get('identifier');
         const password = formData.get('password');
 
+        console.log('Login attempt for:', identifier);
+
         try {
             await this.login(identifier, password);
+            console.log('Login successful, redirecting...');
             window.location.href = 'dashboard.html';
         } catch (error) {
-            this.showError('general', 'Invalid credentials. Please try again.');
+            console.error('Login error:', error);
+            this.showError('general', 'Invalid credentials: ' + error.message);
         }
     }
 

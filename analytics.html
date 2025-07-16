@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Nocturna</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="scripts/database.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="dashboard-nav">
+            <div class="nav-brand">
+                <img src="assets/logo.svg" alt="Nocturna" class="nav-logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="analytics.html" class="active">Analytics</a></li>
+                <li><a href="monetization.html">Monetization</a></li>
+                <li><a href="content-scheduler.html">Scheduler</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="customer.html">Customer View</a></li>
+            </ul>
+            <div class="nav-actions">
+                <span id="userGreeting">Welcome back!</span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </nav>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <h1>Analytics Dashboard</h1>
+                    <p>Track your content performance and audience engagement</p>
+                </div>
+                <div class="header-actions">
+                    <select id="timeRange" class="time-selector">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="365">Last year</option>
+                    </select>
+                    <button id="refreshAnalytics" class="btn btn-primary">🔄 Refresh</button>
+                </div>
+            </header>
+
+            <!-- Key Metrics -->
+            <section class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">👀</div>
+                    <div class="metric-content">
+                        <h3>Total Views</h3>
+                        <div class="metric-value" id="totalViews">0</div>
+                        <div class="metric-change positive" id="viewsChange">+0%</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">❤️</div>
+                    <div class="metric-content">
+                        <h3>Total Likes</h3>
+                        <div class="metric-value" id="totalLikes">0</div>
+                        <div class="metric-change positive" id="likesChange">+0%</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">💬</div>
+                    <div class="metric-content">
+                        <h3>Comments</h3>
+                        <div class="metric-value" id="totalComments">0</div>
+                        <div class="metric-change positive" id="commentsChange">+0%</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">💎</div>
+                    <div class="metric-content">
+                        <h3>Tips Received</h3>
+                        <div class="metric-value" id="totalTips">0</div>
+                        <div class="metric-change positive" id="tipsChange">+0%</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-content">
+                        <h3>Followers</h3>
+                        <div class="metric-value" id="totalFollowers">0</div>
+                        <div class="metric-change positive" id="followersChange">+0%</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-content">
+                        <h3>Engagement Rate</h3>
+                        <div class="metric-value" id="engagementRate">0%</div>
+                        <div class="metric-change positive" id="engagementChange">+0%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-container">
+                    <h3>Performance Over Time</h3>
+                    <div class="chart-legend">
+                        <span class="legend-item views">Views</span>
+                        <span class="legend-item likes">Likes</span>
+                        <span class="legend-item comments">Comments</span>
+                    </div>
+                    <canvas id="performanceChart" class="analytics-chart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Content Type Performance</h3>
+                    <canvas id="contentTypeChart" class="analytics-chart"></canvas>
+                </div>
+            </section>
+
+            <!-- Top Content -->
+            <section class="top-content-section">
+                <h3>Top Performing Content</h3>
+                <div class="content-performance-table">
+                    <div class="table-header">
+                        <div class="table-cell">Content</div>
+                        <div class="table-cell">Views</div>
+                        <div class="table-cell">Likes</div>
+                        <div class="table-cell">Comments</div>
+                        <div class="table-cell">Tips</div>
+                        <div class="table-cell">Engagement</div>
+                    </div>
+                    <div id="topContentList" class="table-body">
+                        <!-- Dynamic content populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Audience Insights -->
+            <section class="audience-insights">
+                <div class="insight-card">
+                    <h3>Peak Activity Hours</h3>
+                    <div id="peakHours" class="hours-chart">
+                        <!-- Activity heatmap -->
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <h3>Engagement Trends</h3>
+                    <div id="engagementTrends" class="trends-list">
+                        <!-- Trend analysis -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendations -->
+            <section class="recommendations-section">
+                <h3>AI-Powered Recommendations</h3>
+                <div id="aiRecommendations" class="recommendations-grid">
+                    <!-- AI suggestions populated by JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="scripts/analytics.js"></script>
+</body>
+</html>

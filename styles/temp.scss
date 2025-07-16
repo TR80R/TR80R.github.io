@@ -1548,3 +1548,25 @@ p {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* V3 Features CSS - Added manually */
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+.metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: all 0.3s ease; }
+.metric-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(226, 166, 183, 0.1); }
+.calendar-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.view-toggles { display: flex; background: var(--bg-secondary); border-radius: 8px; overflow: hidden; }
+.view-toggle { padding: 0.5rem 1rem; background: transparent; border: none; color: var(--text-muted); font-size: 0.875rem; cursor: pointer; transition: all 0.3s ease; }
+.view-toggle.active { background: var(--deep-amethyst); color: white; }
+.calendar-month .calendar-day { min-height: 100px; padding: 0.5rem; background: var(--bg-secondary); border: 1px solid transparent; cursor: pointer; transition: all 0.3s ease; }
+.calendar-day:hover { border-color: var(--deep-amethyst); }
+.calendar-day.today { background: rgba(90, 42, 110, 0.1); border-color: var(--deep-amethyst); }
+.templates-section, .ai-recommendations-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+.templates-grid, .recommendations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+.template-card, .recommendation-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; transition: all 0.3s ease; }
+.template-card:hover, .recommendation-card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(226, 166, 183, 0.1); }
+.revenue-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+.revenue-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: all 0.3s ease; }
+.settings-container { max-width: 800px; margin: 0 auto; }
+.settings-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }

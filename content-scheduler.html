@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Scheduler - Nocturna</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="scripts/database.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="dashboard-nav">
+            <div class="nav-brand">
+                <img src="assets/logo.svg" alt="Nocturna" class="nav-logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="monetization.html">Monetization</a></li>
+                <li><a href="content-scheduler.html" class="active">Scheduler</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="customer.html">Customer View</a></li>
+            </ul>
+            <div class="nav-actions">
+                <span id="userGreeting">Welcome back!</span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </nav>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <h1>Content Scheduler</h1>
+                    <p>Plan, schedule, and automate your content publishing</p>
+                </div>
+                <div class="header-actions">
+                    <button id="addScheduledPost" class="btn btn-primary">📅 Schedule Post</button>
+                    <button id="bulkSchedule" class="btn btn-secondary">📊 Bulk Schedule</button>
+                </div>
+            </header>
+
+            <!-- Calendar View -->
+            <section class="calendar-section">
+                <div class="calendar-header">
+                    <div class="calendar-navigation">
+                        <button id="prevMonth" class="btn btn-secondary">‹</button>
+                        <h3 id="currentMonth">January 2025</h3>
+                        <button id="nextMonth" class="btn btn-secondary">›</button>
+                    </div>
+                    <div class="view-toggles">
+                        <button class="view-toggle active" data-view="month">Month</button>
+                        <button class="view-toggle" data-view="week">Week</button>
+                        <button class="view-toggle" data-view="list">List</button>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar days will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Scheduled Posts -->
+            <section class="scheduled-posts-section">
+                <div class="section-header">
+                    <h3>Upcoming Posts</h3>
+                    <div class="filter-controls">
+                        <select id="statusFilter">
+                            <option value="all">All Status</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="draft">Draft</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                        <select id="platformFilter">
+                            <option value="all">All Platforms</option>
+                            <option value="nocturna">Nocturna</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="twitter">Twitter</option>
+                            <option value="tiktok">TikTok</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="posts-list" id="scheduledPostsList">
+                    <!-- Scheduled posts will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- AI Recommendations -->
+            <section class="ai-recommendations-section">
+                <h3>AI-Powered Scheduling Recommendations</h3>
+                <div id="aiSchedulingRecommendations" class="recommendations-grid">
+                    <!-- AI recommendations populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Content Templates -->
+            <section class="templates-section">
+                <h3>Content Templates</h3>
+                <div class="templates-grid">
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <div class="template-icon">📸</div>
+                            <h4>Photo Series</h4>
+                            <p>Multi-photo storytelling template</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="useTemplate('photo-series')">Use Template</button>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <div class="template-icon">🎥</div>
+                            <h4>Video Teaser</h4>
+                            <p>Build anticipation with video previews</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="useTemplate('video-teaser')">Use Template</button>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <div class="template-icon">💭</div>
+                            <h4>Behind the Scenes</h4>
+                            <p>Share your creative process</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="useTemplate('behind-scenes')">Use Template</button>
+                    </div>
+                    
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <div class="template-icon">🎉</div>
+                            <h4>Announcement</h4>
+                            <p>Special announcements and updates</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="useTemplate('announcement')">Use Template</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Schedule Post Modal -->
+    <div id="schedulePostModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Schedule New Post</h3>
+                <button class="modal-close" onclick="closeScheduleModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-section">
+                        <h4>Content</h4>
+                        <div class="form-group">
+                            <label>Upload Media</label>
+                            <div class="upload-area" id="scheduleUploadArea">
+                                <input type="file" id="scheduleFileInput" multiple accept="image/*,video/*" style="display: none;">
+                                <div class="upload-placeholder">
+                                    <div class="upload-icon">📁</div>
+                                    <p>Drag & drop files or click to upload</p>
+                                </div>
+                            </div>
+                            <div id="scheduleFilePreviews" class="file-previews"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="scheduleCaption">Caption</label>
+                            <textarea id="scheduleCaption" placeholder="Write your caption..." maxlength="2000"></textarea>
+                            <small><span id="captionCount">0</span>/2000 characters</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="scheduleTags">Tags</label>
+                            <input type="text" id="scheduleTags" placeholder="Add tags separated by commas">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4>Scheduling</h4>
+                        <div class="form-group">
+                            <label for="scheduleDate">Publish Date</label>
+                            <input type="date" id="scheduleDate">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="scheduleTime">Publish Time</label>
+                            <input type="time" id="scheduleTime">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="scheduleTimezone">Timezone</label>
+                            <select id="scheduleTimezone">
+                                <option value="UTC">UTC</option>
+                                <option value="EST">Eastern Time</option>
+                                <option value="PST">Pacific Time</option>
+                                <option value="GMT">Greenwich Mean Time</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Platforms</label>
+                            <div class="platform-checkboxes">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="platformNocturna" checked>
+                                    <span>Nocturna</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="platformInstagram">
+                                    <span>Instagram</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="platformTwitter">
+                                    <span>Twitter</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="platformTiktok">
+                                    <span>TikTok</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="schedulePrivacy">Privacy Level</label>
+                            <select id="schedulePrivacy">
+                                <option value="public">Public</option>
+                                <option value="subscribers">Subscribers Only</option>
+                                <option value="premium">Premium Subscribers</option>
+                                <option value="vip">VIP Subscribers</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="optimal-times">
+                    <h4>AI Suggested Times</h4>
+                    <div class="time-suggestions">
+                        <button class="time-suggestion" onclick="useOptimalTime('2025-01-16', '20:00')">
+                            <span class="time">8:00 PM</span>
+                            <span class="engagement">+45% engagement</span>
+                        </button>
+                        <button class="time-suggestion" onclick="useOptimalTime('2025-01-16', '21:30')">
+                            <span class="time">9:30 PM</span>
+                            <span class="engagement">+38% engagement</span>
+                        </button>
+                        <button class="time-suggestion" onclick="useOptimalTime('2025-01-17', '19:15')">
+                            <span class="time">7:15 PM Tomorrow</span>
+                            <span class="engagement">+52% engagement</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="saveDraft()">Save as Draft</button>
+                <button class="btn btn-primary" onclick="schedulePost()">Schedule Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Schedule Modal -->
+    <div id="bulkScheduleModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Bulk Schedule Posts</h3>
+                <button class="modal-close" onclick="closeBulkModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="bulk-upload-area">
+                    <input type="file" id="bulkFileInput" multiple accept="image/*,video/*" style="display: none;">
+                    <div class="bulk-placeholder">
+                        <div class="upload-icon">📁</div>
+                        <p>Upload multiple files for bulk scheduling</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('bulkFileInput').click()">Select Files</button>
+                    </div>
+                </div>
+                
+                <div id="bulkFilesList" class="bulk-files-list"></div>
+                
+                <div class="bulk-settings">
+                    <h4>Bulk Settings</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="bulkStartDate">Start Date</label>
+                            <input type="date" id="bulkStartDate">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bulkFrequency">Posting Frequency</label>
+                            <select id="bulkFrequency">
+                                <option value="daily">Daily</option>
+                                <option value="every-other-day">Every Other Day</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="custom">Custom Schedule</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bulkTime">Preferred Time</label>
+                            <input type="time" id="bulkTime" value="20:00">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bulkPrivacy">Default Privacy</label>
+                            <select id="bulkPrivacy">
+                                <option value="subscribers">Subscribers Only</option>
+                                <option value="public">Public</option>
+                                <option value="premium">Premium Subscribers</option>
+                                <option value="vip">VIP Subscribers</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBulkModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="processBulkSchedule()">Schedule All Posts</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/content-scheduler.js"></script>
+</body>
+</html>
