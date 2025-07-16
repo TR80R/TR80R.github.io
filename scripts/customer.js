@@ -30,16 +30,14 @@ class NocturnaCustomer {
         this.tips = JSON.parse(localStorage.getItem('nocturna_tips')) || [];
         this.follows = JSON.parse(localStorage.getItem('nocturna_follows')) || [];
         
-        // Create some sample data if none exists
-        if (this.allContent.length === 0) {
-            this.createSampleContent();
-        }
+        // Add sample content to mix with real uploads
+        this.addSampleContent();
         
         // Shuffle content for algorithm
         this.shuffleContent();
     }
 
-    createSampleContent() {
+    addSampleContent() {
         const sampleContent = [
             {
                 id: 'sample_1',
@@ -82,8 +80,13 @@ class NocturnaCustomer {
             }
         ];
 
-        this.allContent = [...this.allContent, ...sampleContent];
-        localStorage.setItem('nocturna_uploads', JSON.stringify(this.allContent));
+        // Add sample content to existing real uploads (if any)
+        // Check if sample content already exists to avoid duplicates
+        const hasSampleContent = this.allContent.some(item => item.id && item.id.toString().startsWith('sample_'));
+        
+        if (!hasSampleContent) {
+            this.allContent = [...this.allContent, ...sampleContent];
+        }
     }
 
     shuffleContent() {
@@ -122,12 +125,19 @@ class NocturnaCustomer {
         // Navigation
         const forYouBtn = document.getElementById('forYouBtn');
         const followingBtn = document.getElementById('followingBtn');
+        const refreshBtn = document.getElementById('refreshBtn');
         
         if (forYouBtn) {
             forYouBtn.addEventListener('click', () => this.switchFeed('forYou'));
         }
         if (followingBtn) {
             followingBtn.addEventListener('click', () => this.switchFeed('following'));
+        }
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.refreshContent();
+                this.renderCurrentVideo();
+            });
         }
 
         // Interactions
@@ -216,6 +226,22 @@ class NocturnaCustomer {
                 }
             });
         }
+
+        // Page visibility listener to refresh content when tab becomes active
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && this.isLoggedIn) {
+                this.refreshContent();
+                this.renderCurrentVideo();
+            }
+        });
+
+        // Storage listener to detect uploads from other tabs
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'nocturna_uploads' && this.isLoggedIn) {
+                this.refreshContent();
+                this.renderCurrentVideo();
+            }
+        });
     }
 
     handleLogin(e) {
@@ -273,8 +299,16 @@ class NocturnaCustomer {
             app.style.display = 'block';
         }
 
+        // Refresh data to get latest uploads
+        this.refreshContent();
         this.updateBalance();
         this.renderCurrentVideo();
+    }
+
+    refreshContent() {
+        // Reload data from localStorage to get latest uploads
+        this.loadData();
+        this.currentVideoIndex = 0; // Reset to first video
     }
 
     showError(elementId, message) {

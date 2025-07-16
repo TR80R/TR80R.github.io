@@ -31,6 +31,13 @@ A comprehensive NSFW creator platform with three distinct portals: creator dashb
 2. **Open any HTML file** in a web browser to start using the application
 3. **Start with `index.html`** for the main landing page
 
+## Latest Updates (v1.1)
+
+✓ **Fixed upload visibility** - Creator uploads now properly appear in customer portal
+✓ **Added real-time refresh** - Content updates automatically when switching tabs
+✓ **Added manual refresh button** - Click 🔄 in customer portal to refresh content
+✓ **Fixed data synchronization** - Real uploads mix with sample content correctly
+
 ## Login Credentials
 
 ### Creator Accounts
