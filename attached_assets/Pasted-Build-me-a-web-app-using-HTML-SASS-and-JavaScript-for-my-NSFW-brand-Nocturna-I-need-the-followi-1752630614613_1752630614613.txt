@@ -1,0 +1,178 @@
+Build me a web app using HTML, SASS, and JavaScript for my NSFW brand “Nocturna”. I need the following features:
+
+⸻
+
+🎨 Design & Branding:
+
+Use this color palette across the entire UI:
+	•	Midnight Black #0B0B0F – background
+	•	Deep Amethyst #5A2A6E – primary/CTAs
+	•	Velvet Plum #7F3D67 – secondary text/buttons
+	•	Moonlight White #F6F5F3 – main text & input field backgrounds
+	•	Rosé Dust #E2A6B7 – highlights/flair, accents
+
+The app should be dark-themed, modern, mobile-responsive, and clean. Font: 'Helvetica Neue' or system sans-serif fallback.
+
+⸻
+
+👤 Auth System:
+	•	Build a simple sign-up and login system using localStorage or JSON for this prototype (no backend required).
+	•	Store user data: username, email, password, phone, date_joined
+	•	After login, redirect the user to their Creator Dashboard
+
+⸻
+
+📥 Creator Dashboard (Upload Portal):
+
+Main features:
+	•	An upload form where users can drag & drop or select:
+	•	Up to 10 files at once
+	•	File types: .jpg, .png, .mp4, .mov
+	•	Chunked uploads or full file uploads (simulate chunking if needed)
+	•	Each file should have:
+	•	A preview
+	•	A caption field
+	•	A tag/multiple category input (multi-select or comma-separated)
+
+Tech:
+	•	Use FileReader to preview uploaded content
+	•	Store uploaded content and metadata in localStorage or a temporary local object array (uploads[])
+	•	Add visual status for “upload complete” or “queued”
+
+⸻
+
+🧠 Bonus Features (if possible):
+	•	A counter for total uploads
+	•	A simulated “training AI” progress bar (just visual)
+	•	Include a “Submit to AI Engine” button that logs file data to console
+	•	A fake “rotation preview” that mimics TikTok scroll with 2-3 uploaded videos
+
+⸻
+
+🧾 Pages Needed:
+	1.	/index.html — landing/welcome screen with brand summary
+	2.	/signup.html — user registration
+	3.	/login.html — login page
+	4.	/dashboard.html — creator upload dashboard
+	5.	/style.scss — brand styles, compiled into CSS
+	6.	/scripts/app.js — handles auth logic, upload, preview, and simple routing
+
+⸻
+
+📁 Folder Structure:
+
+/nocturna-uploader
+├── index.html
+├── signup.html
+├── login.html
+├── dashboard.html
+├── styles/
+│   └── style.scss
+├── scripts/
+│   └── app.js
+├── assets/
+│   └── logo.svg (placeholder)
+├── data/
+│   └── uploads.json (for test output)
+
+
+⸻
+
+🧠 Final Instruction:
+
+Keep everything fully responsive, clean, and “on-brand” with Nocturna’s elegant dark-night aesthetic. Prioritize UX and mobile-first behavior. This uploader is temporary and will be used to test AI algorithmic scroll behavior (similar to TikTok’s infinite feed) in future versions.
+
+⸻
+
+
+Build me an Admin Portal using HTML, SASS, and JavaScript that connects to the creator upload platform for my NSFW brand, Nocturna.
+
+⸻
+
+🛠️ Requirements:
+
+Create a new route/page: admin.html
+This should be protected by a simple admin login (hardcoded username/password is fine for now).
+
+Once logged in, show the Admin Dashboard with two main tabs:
+
+⸻
+
+1. 👥 Creator Management
+
+Display a table or card layout with all registered users from localStorage or users[] JSON. For each creator, show:
+	•	Username
+	•	Email
+	•	Phone Number
+	•	Date Joined
+	•	Number of Uploads
+	•	Last Active
+
+Add sorting and search functionality by name, email, or join date.
+
+⸻
+
+2. 📂 Upload Monitoring
+
+Display a list/grid of all uploaded content from all users, pulled from a shared local uploads[] array or simulated backend.
+
+For each upload, show:
+	•	Thumbnail preview (image or video icon)
+	•	Caption
+	•	Tags
+	•	Upload date/time
+	•	File type
+	•	Uploaded by: (username or user ID)
+
+Include filters to search by:
+	•	File type (image / video)
+	•	Uploader name
+	•	Recent uploads (last 24h, last 7d, etc.)
+
+Add a download or “View Full” button for each item.
+
+⸻
+
+🧾 Additional Features (Optional):
+	•	A toggle to activate/deactivate a user
+	•	Delete uploads or flag them
+	•	Export all data to JSON or CSV
+	•	Light/Dark theme switch (follow Nocturna color palette)
+	•	Admin stats card: Total Users, Total Uploads, Active Today, etc.
+
+⸻
+
+🎨 Apply Brand Styling:
+
+Use this Nocturna color palette across the Admin UI:
+	•	#0B0B0F (Midnight Black – background)
+	•	#5A2A6E (Deep Amethyst – accents, buttons)
+	•	#7F3D67 (Velvet Plum – secondary highlights)
+	•	#F6F5F3 (Moonlight White – text/input backgrounds)
+	•	#E2A6B7 (Rosé Dust – badges, highlights)
+
+Make the dashboard dark-themed, clean, responsive, and mobile-friendly.
+
+⸻
+
+📁 Folder Structure Update:
+
+/nocturna-uploader
+├── admin.html
+├── login.html
+├── dashboard.html
+├── scripts/
+│   ├── app.js (creator logic)
+│   └── admin.js (admin logic)
+├── data/
+│   ├── users.json (or localStorage simulation)
+│   └── uploads.json
+
+
+⸻
+
+✅ Final Notes:
+
+This admin portal is used only internally to review user activity, test AI content, and audit uploads. Focus on data clarity, usability, and responsive UI. Link it cleanly from a secret /admin.html route behind login.
+
+⸻

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard - Nocturna</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="dashboard-nav">
+            <div class="nav-brand">
+                <img src="assets/logo.svg" alt="Nocturna" class="nav-logo">
+                <span class="nav-title">Creator Dashboard</span>
+            </div>
+            <div class="nav-user">
+                <span id="userGreeting">Welcome, Creator</span>
+                <button id="logoutBtn" class="btn btn-outline">Logout</button>
+            </div>
+        </nav>
+
+        <main class="dashboard-main">
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📂</div>
+                        <div class="stat-content">
+                            <h3 id="totalUploads">0</h3>
+                            <p>Total Uploads</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <h3 id="todayUploads">0</h3>
+                            <p>Today's Uploads</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🤖</div>
+                        <div class="stat-content">
+                            <h3 id="aiProgress">0%</h3>
+                            <p>AI Training</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Training Progress -->
+            <section class="ai-section">
+                <div class="ai-card">
+                    <h3>AI Engine Training Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">Ready to process new content</p>
+                    <button id="submitAiBtn" class="btn btn-primary" disabled>Submit to AI Engine</button>
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-card">
+                    <h2>Upload Content</h2>
+                    
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <div class="upload-icon">📁</div>
+                            <h3>Drag & Drop Files Here</h3>
+                            <p>or click to browse files</p>
+                            <p class="upload-info">Supports: JPG, PNG, MP4, MOV (Max 10 files)</p>
+                        </div>
+                        <input type="file" id="fileInput" multiple 
+                               accept=".jpg,.jpeg,.png,.mp4,.mov" style="display: none;">
+                    </div>
+
+                    <div class="files-preview" id="filesPreview"></div>
+
+                    <button id="uploadBtn" class="btn btn-primary btn-full" style="display: none;">
+                        Upload Files
+                    </button>
+                </div>
+            </section>
+
+            <!-- Uploaded Content Section -->
+            <section class="content-section">
+                <h2>Your Content</h2>
+                <div class="content-grid" id="contentGrid">
+                    <!-- Content items will be populated here -->
+                </div>
+            </section>
+
+            <!-- Video Preview Section -->
+            <section class="preview-section">
+                <h2>Content Preview</h2>
+                <div class="video-preview-container" id="videoPreview">
+                    <p class="preview-placeholder">Upload videos to see preview rotation</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>
