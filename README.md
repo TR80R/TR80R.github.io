@@ -31,12 +31,14 @@ A comprehensive NSFW creator platform with three distinct portals: creator dashb
 2. **Open any HTML file** in a web browser to start using the application
 3. **Start with `index.html`** for the main landing page
 
-## Latest Updates (v1.1)
+## Latest Updates (v2.0 - Database Edition)
 
-✓ **Fixed upload visibility** - Creator uploads now properly appear in customer portal
-✓ **Added real-time refresh** - Content updates automatically when switching tabs
-✓ **Added manual refresh button** - Click 🔄 in customer portal to refresh content
-✓ **Fixed data synchronization** - Real uploads mix with sample content correctly
+✓ **IndexedDB Integration** - Complete local database system for better data management
+✓ **File Storage** - Actual file data stored in database (not just metadata)
+✓ **Relational Data** - Proper relationships between users, uploads, comments, likes, and tips
+✓ **Real-time Interactions** - Live likes, comments, tips, and follows with database persistence
+✓ **Data Migration** - Automatic migration from localStorage to IndexedDB
+✓ **Enhanced Performance** - Better data querying and management capabilities
 
 ## Login Credentials
 
@@ -77,15 +79,17 @@ nocturna-complete/
 ## How It Works
 
 ### Data Storage
-- Uses browser localStorage for data persistence
-- No backend server required
-- All user data, uploads, and interactions stored locally
+- **IndexedDB**: Advanced browser database for structured data storage
+- **File Storage**: Complete file data stored in database (images/videos as base64)
+- **Relational Structure**: Proper relationships between users, uploads, comments, likes, tips
+- **No Backend Required**: Fully client-side with sophisticated data management
+- **Migration Support**: Automatic migration from localStorage to IndexedDB
 
 ### Content Flow
 1. Creators upload content through dashboard
-2. Content stored in localStorage
+2. Content and file data stored in IndexedDB
 3. Customer portal loads all content for discovery
-4. Interactions (likes, comments, tips) tracked and stored
+4. Interactions (likes, comments, tips) tracked and stored with full relationships
 
 ### Navigation
 - Direct links between all portals
@@ -96,9 +100,19 @@ nocturna-complete/
 
 ### Built With
 - **Frontend**: HTML5, CSS3, JavaScript ES6+
+- **Database**: IndexedDB with custom JavaScript ORM
 - **Styling**: SASS with custom CSS properties
-- **Storage**: Browser localStorage/sessionStorage
+- **Storage**: IndexedDB for persistent data, sessionStorage for sessions
 - **Design**: Dark theme with Nocturna brand colors
+
+### Database Schema
+- **users**: User accounts and profiles
+- **uploads**: Content metadata and information
+- **files**: Actual file data (base64 encoded)
+- **comments**: User comments on uploads
+- **likes**: Like relationships between users and content
+- **tips**: Virtual currency transactions
+- **follows**: User following relationships
 
 ### Browser Compatibility
 - Modern browsers with localStorage support
@@ -130,10 +144,11 @@ If you need to modify styles:
 - No server-side configuration needed
 
 ### Production Considerations
-- Currently uses localStorage (client-side only)
-- For production, consider migrating to proper database
+- Currently uses IndexedDB (client-side database)
+- For production, consider migrating to server-side database
 - Add server-side authentication for security
 - Implement cloud storage for file uploads
+- Current system supports full offline functionality
 
 ## Support
 
