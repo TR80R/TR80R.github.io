@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nocturna - Discover</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="customer-container">
+        <!-- Customer Login Modal -->
+        <div id="customerLoginModal" class="modal">
+            <div class="modal-content">
+                <h2>Customer Access</h2>
+                <form id="customerLoginForm">
+                    <div class="form-group">
+                        <label for="customerUsername">Username</label>
+                        <input type="text" id="customerUsername" required placeholder="customer1 or premium_user">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPassword">Password</label>
+                        <input type="password" id="customerPassword" required placeholder="pass123 or nocturna123">
+                    </div>
+                    <span class="error-message" id="customerLoginError"></span>
+                    <button type="submit" class="btn btn-primary">Access Premium</button>
+                </form>
+                <div class="auth-footer">
+                    <p><a href="index.html">← Back to Home</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer App -->
+        <div id="customerApp" style="display: none;">
+            <!-- Top Navigation -->
+            <nav class="customer-nav">
+                <div class="nav-left">
+                    <img src="assets/logo.svg" alt="Nocturna" class="nav-logo">
+                    <span class="nav-title">Nocturna</span>
+                </div>
+                <div class="nav-center">
+                    <button id="forYouBtn" class="nav-btn active">For You</button>
+                    <button id="followingBtn" class="nav-btn">Following</button>
+                </div>
+                <div class="nav-right">
+                    <div class="balance-display">
+                        <span class="balance-icon">💎</span>
+                        <span id="customerBalance">500</span>
+                    </div>
+                    <button id="customerLogoutBtn" class="btn btn-outline">Logout</button>
+                </div>
+            </nav>
+
+            <!-- Content Feed -->
+            <div class="feed-container">
+                <div class="video-feed" id="videoFeed">
+                    <!-- Videos will be populated here -->
+                </div>
+
+                <!-- Side Panel -->
+                <div class="side-panel">
+                    <div class="interaction-buttons">
+                        <button class="interaction-btn like-btn" id="likeBtn">
+                            <span class="icon">❤️</span>
+                            <span class="count" id="likeCount">0</span>
+                        </button>
+                        <button class="interaction-btn comment-btn" id="commentBtn">
+                            <span class="icon">💬</span>
+                            <span class="count" id="commentCount">0</span>
+                        </button>
+                        <button class="interaction-btn tip-btn" id="tipBtn">
+                            <span class="icon">💎</span>
+                            <span class="count">Tip</span>
+                        </button>
+                        <button class="interaction-btn share-btn">
+                            <span class="icon">🔗</span>
+                            <span class="count">Share</span>
+                        </button>
+                    </div>
+
+                    <!-- Creator Info -->
+                    <div class="creator-info" id="creatorInfo">
+                        <div class="creator-avatar">
+                            <img src="assets/logo.svg" alt="Creator" id="creatorAvatar">
+                        </div>
+                        <div class="creator-details">
+                            <h3 id="creatorName">Creator</h3>
+                            <p id="creatorFollowers">0 followers</p>
+                            <button class="btn btn-primary follow-btn" id="followBtn">Follow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comments Panel -->
+            <div class="comments-panel" id="commentsPanel">
+                <div class="comments-header">
+                    <h3>Comments</h3>
+                    <button class="close-btn" id="closeComments">×</button>
+                </div>
+                <div class="comments-list" id="commentsList">
+                    <!-- Comments will be populated here -->
+                </div>
+                <div class="comment-input">
+                    <input type="text" id="newComment" placeholder="Add a comment...">
+                    <button class="btn btn-primary" id="postComment">Post</button>
+                </div>
+            </div>
+
+            <!-- Tip Modal -->
+            <div class="tip-modal" id="tipModal">
+                <div class="modal-content">
+                    <h3>Send Tip</h3>
+                    <div class="tip-amounts">
+                        <button class="tip-amount" data-amount="10">💎 10</button>
+                        <button class="tip-amount" data-amount="25">💎 25</button>
+                        <button class="tip-amount" data-amount="50">💎 50</button>
+                        <button class="tip-amount" data-amount="100">💎 100</button>
+                    </div>
+                    <div class="custom-tip">
+                        <input type="number" id="customTipAmount" placeholder="Custom amount" min="1" max="500">
+                        <button class="btn btn-primary" id="sendCustomTip">Send</button>
+                    </div>
+                    <button class="btn btn-secondary" id="closeTipModal">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Video Controls -->
+            <div class="video-controls">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-caption" id="videoCaption">Loading amazing content...</div>
+                    <div class="video-tags" id="videoTags"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/customer.js"></script>
+</body>
+</html>
